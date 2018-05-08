@@ -18,9 +18,41 @@ var resetButton = document.querySelector("#reset");
 var easyBtn = document.querySelector("#easyBtn");
 var hardBtn = document.querySelector("#hardBtn");
 var numSquares = 6;
+var modeButtons = document.querySelectorAll(".mode");
 
+for(var i = 0; i<modeButtons.length; i++){
+    modeButtons[i].addEventListener("click", function(){
+        modeButtons[0].classList.remove("selected");
+        modeButtons[1].classList.remove("selected");
+        this.classList.add("selected");
+        
+        
+        if(this.textContent === "easy") {
+            numSquares=3;
+        } else {
+            numSquares=6;
+        }
+        reset();
+    });
+}
 
-easyBtn.addEventListener("click", function(){
+function reset() {
+    colors = generateRandomColors(6);
+    pickedColor = pickColor();
+    colorDisplay.textContent = pickedColor;
+    messageDisplay.textContent = "New Colors";
+    for(var i = 0; i < squares.length; i++){
+        if(colors[i]){
+            squares[i].style.display = "block";
+            squares[i].style.backgroundColor = colors[i];
+        } else {
+            squares[i].style.backgroundColor = "none";
+        }
+    }
+    h1.style.backgroundColor = "steelblue";
+}
+
+/* easyBtn.addEventListener("click", function(){
     numSquares = 3;
     hardBtn.classList.remove("selected");
     easyBtn.classList.add("selected");
@@ -47,17 +79,10 @@ hardBtn.addEventListener("click", function(){
             squares[i].style.backgroundColor = colors[i];
             squares[i].style.display = "block";
     }
-});
+}); */
 
 resetButton.addEventListener("click", function(){
-    colors = generateRandomColors(6);
-    pickedColor = pickColor();
-    colorDisplay.textContent = pickedColor;
-
-    for(var i = 0; i < squares.length; i++){
-        squares[i].style.backgroundColor = colors[i];
-    }
-    h1.style.backgroundColor = "steelblue";
+    reset();
 });
 
 colorDisplay.textContent = pickedColor;
